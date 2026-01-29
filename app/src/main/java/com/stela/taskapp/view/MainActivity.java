@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private State stateSelected;
     private Priority prioritySelected;
     private List<Task> taskList = new ArrayList<>();
-    LocalDate actualDate = LocalDate.now();
 
     Calendar calendar = Calendar.getInstance();
 

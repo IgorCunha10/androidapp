@@ -1,9 +1,8 @@
 package com.stela.taskapp.model;
 
-import androidx.annotation.NonNull;
+import android.widget.EditText;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.annotation.NonNull;
 
 public class Task {
 
@@ -12,7 +11,9 @@ public class Task {
     private Priority priority;
     private State state;
 
-    public Task(String name, String description, Priority priority, State state) {
+    private EditText date;
+
+    public Task(String name, String description, Priority priority, State state, EditText date) {
         this.name = name;
         this.description = description;
         this.priority = priority;

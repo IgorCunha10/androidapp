@@ -7,9 +7,8 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:padding="30dp"
-    tools:context=".view.MainActivity"
-    >
+    android:padding="20dp"
+    tools:context=".view.MainActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -61,20 +60,21 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prazo da Task"
-        android:textSize="18sp"
-        android:textColor="#000000"
-        android:ems="10"
         android:layout_marginTop="10dp"
-        />
+        android:ems="10"
+        android:text="Prazo da Task"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/edtData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="date"
+        android:focusable="false"
+        android:clickable="true"
         android:hint="data"
+        android:inputType="date"
 
 
         />
@@ -82,37 +82,38 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prioridade"
-        android:textSize="18dp"
-        android:textColor="@color/black"
         android:layout_marginTop="10dp"
-        />
+        android:text="Prioridade"
+        android:textColor="@color/black"
+        android:textSize="18dp" />
 
     <Spinner
         android:id="@+id/spnPrioridade"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:padding="20dp"
+        android:paddingStart="0dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Estado"
-        android:textSize="18dp"
-        android:textColor="@color/black"
         android:layout_marginTop="10dp"
-        />
+        android:text="Estado"
+        android:textColor="@color/black"
+        android:textSize="18dp" />
 
     <Spinner
         android:id="@+id/spnState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:padding="20dp"
+        android:paddingStart="0dp" />
 
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
         android:background="@color/design_default_color_secondary"
         android:text="Enviar"
         android:textColor="@color/white" />

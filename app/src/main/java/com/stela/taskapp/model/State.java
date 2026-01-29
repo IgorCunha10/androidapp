@@ -1,5 +1,7 @@
 package com.stela.taskapp.model;
 
+
+
 public enum State {
 
     SELECIONE(1, "Escolha o Estado"),

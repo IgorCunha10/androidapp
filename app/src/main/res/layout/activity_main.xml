@@ -8,7 +8,7 @@
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="30dp"
-    tools:context=".MainActivity"
+    tools:context=".view.MainActivity"
     >
 
     <TextView
@@ -69,12 +69,13 @@
         />
 
     <EditText
-        android:id="@+id/editTextDate3"
+        android:id="@+id/edtData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="date"
         android:hint="data"
+
 
         />
 
@@ -109,7 +110,7 @@
         />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/design_default_color_secondary"

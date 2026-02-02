@@ -2,9 +2,9 @@ package com.stela.taskapp.view;
 
 import static com.stela.taskapp.model.Priority.SELECT;
 import static com.stela.taskapp.model.State.SELECIONE;
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,33 +13,28 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.stela.taskapp.R;
+import com.stela.taskapp.data.TaskRepository;
 import com.stela.taskapp.model.Priority;
 import com.stela.taskapp.model.State;
 import com.stela.taskapp.model.Task;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class TaskFormActivity extends AppCompatActivity {
 
     private Button btnSave;
     private Spinner spnEstado, spnPrioridade;
     private EditText edtData, edtName, edtDescription;
     private State stateSelected;
     private Priority prioritySelected;
-    private List<Task> taskList = new ArrayList<>();
+    private TaskRepository repo;
 
-    Calendar calendar = Calendar.getInstance();
 
-    int ano = calendar.get(Calendar.YEAR);
-    int mes = calendar.get(Calendar.MONTH);
-    int dia = calendar.get(Calendar.DAY_OF_MONTH);
-    // private String date =  edtData.toString();
-
-    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
         initListeners();
+        initData();
+
+
+    }
+
+    private void initData() {
+        repo = TaskRepository.getInstance();
     }
 
 
@@ -81,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
         );
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnPrioridade.setAdapter(adapter1);
+
+
+
 
     }
 
@@ -124,12 +129,19 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 clearForm();
 
-                Task newTask = new Task(name, description, prioritySelected, stateSelected, edtData);
-                taskList.add(newTask);
-                for (Task task : taskList) {
-                    Log.d("LOG_TASKS", task.toString());
-                }
-                Toast.makeText(this, "Task cadastrada com sucesso!", Toast.LENGTH_SHORT).show();
+                String edtData = LocalDate.now()
+                        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+                Task newTask = new Task(
+                        name,
+                        description,
+                        prioritySelected,
+                        stateSelected,
+                        edtData
+                );
+                repo.addTask(newTask);
+
+                finish();
             }
         });
     }

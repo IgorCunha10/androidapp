@@ -12,16 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskApp">
         <activity
-            android:name=".view.tasksActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.MainActivity"
-            android:exported="true">
+            android:name=".view.TasksActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.TaskFormActivity"
+            android:exported="true">
+
         </activity>
     </application>
 

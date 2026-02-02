@@ -4,8 +4,10 @@ import com.stela.taskapp.model.Task;
 
 import java.util.ArrayList;
 
+
 public class TaskRepository {
 
+    private int actualId = 0;
     private static TaskRepository instance;
     private final ArrayList<Task> tasks;
     private String text;
@@ -49,5 +51,11 @@ public class TaskRepository {
     public void setText(String text) {
         this.text = text;
     }
+
+    public int createId() {
+        actualId += 1;
+        return actualId;
+    }
+
 }
 

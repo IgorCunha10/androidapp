@@ -3,6 +3,7 @@ package com.stela.taskapp.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,10 +18,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
 
 
-    private ArrayList<Task> taskList;
+    private OnTaskDeleteListener listener;
+    private static ArrayList<Task> taskList;
+    private static Task deletedTask;
 
-    public TaskAdapter(ArrayList<Task> taskList) {
+    public TaskAdapter(ArrayList<Task> taskList, OnTaskDeleteListener listener) {
         this.taskList = taskList;
+        this.listener = listener;
     }
 
     public void setTaskList(ArrayList<Task> taskList) {
@@ -46,18 +50,27 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.taskDescription.setText(task.getDescription());
         holder.taskDate.setText(task.getDate());
         holder.taskPriority.setText(task.getPriority().toString());
-        holder.taskState.setText(task.getState().toString());;
+        holder.taskState.setText(task.getState().toString());
+        holder.deleteButton.setOnClickListener(v -> {
+            deleteItem(position);
+            if (listener != null) {
+                listener.onDeleteClick(holder.getBindingAdapterPosition(), task);
+            }
+        });
+
 
     }
+
 
     @Override
     public int getItemCount() {
         return taskList.size();
     }
 
-    static class TaskViewHolder extends RecyclerView.ViewHolder {
+    class TaskViewHolder extends RecyclerView.ViewHolder {
 
         TextView taskName, taskDescription, taskDate, taskPriority, taskState;
+        ImageButton deleteButton;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,7 +79,24 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             taskDate = itemView.findViewById(R.id.taskData);
             taskPriority = itemView.findViewById(R.id.taskPriority);
             taskState = itemView.findViewById(R.id.taskState);
-        }
-    }
-}
+            deleteButton = itemView.findViewById(R.id.deleteButton);
 
+        }
+
+
+    }
+
+
+    public interface OnTaskDeleteListener {
+        void onDeleteClick(int position, Task task);
+
+
+    }
+
+
+    public void deleteItem(int position) {
+        taskList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+}

@@ -133,6 +133,7 @@ public class TaskFormActivity extends AppCompatActivity {
                         .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
                 Task newTask = new Task(
+                        repo.createId(),
                         name,
                         description,
                         prioritySelected,

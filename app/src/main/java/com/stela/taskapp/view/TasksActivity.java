@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,15 +45,19 @@ public class TasksActivity extends AppCompatActivity {
         initData();
 
 
+
+
         recyclerView = findViewById(R.id.recycler_view);
 
-        adapter = new TaskAdapter(repo.getTasks());
+        adapter = new TaskAdapter(repo.getTasks(), (position, task) -> {
+            repo.removeTask(task);
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         recyclerView.setAdapter(adapter);
 
-    }
 
+    }
 
     private void initView() {
 

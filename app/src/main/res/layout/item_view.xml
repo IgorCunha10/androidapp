@@ -16,7 +16,9 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+
         <!-- Título da tarefa -->
+
         <TextView
             android:id="@+id/mainText"
             android:layout_width="match_parent"
@@ -37,6 +39,7 @@
             android:textColor="@color/teal_700" />
 
         <!-- Linha de informações -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,7 +75,22 @@
                 android:text="Pendente"
                 android:textSize="12sp"
                 android:textColor="@color/black" />
+
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/deleteButton"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:layout_margin="10dp"
+
+
+            app:srcCompat="@drawable/ic_delete" />
 
     </LinearLayout>
 

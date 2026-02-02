@@ -20,7 +20,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     private OnTaskDeleteListener listener;
     private static ArrayList<Task> taskList;
-    private static Task deletedTask;
 
     public TaskAdapter(ArrayList<Task> taskList, OnTaskDeleteListener listener) {
         this.taskList = taskList;
@@ -52,7 +51,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.taskPriority.setText(task.getPriority().toString());
         holder.taskState.setText(task.getState().toString());
         holder.deleteButton.setOnClickListener(v -> {
-            deleteItem(position);
+            deleteItem(holder.getBindingAdapterPosition());
             if (listener != null) {
                 listener.onDeleteClick(holder.getBindingAdapterPosition(), task);
             }

@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    val room_version = "2.8.4"
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -45,5 +47,9 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation ("androidx.room:room-runtime:$room_version")
+    annotationProcessor ("androidx.room:room-compiler:$room_version")
+
+
 
 }

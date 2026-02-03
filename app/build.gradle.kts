@@ -2,6 +2,7 @@
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -33,9 +34,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }
 
 dependencies {
+    implementation(libs.core.ktx)
     val room_version = "2.8.4"
 
     implementation(libs.appcompat)

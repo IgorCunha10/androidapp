@@ -82,6 +82,7 @@ public class TaskFormActivity extends AppCompatActivity {
     private void configurarTelaEdicao() {
         tvMainScText.setText("Editar Tarefa");
         btnSave.setText("Salvar Alterações");
+
     }
 
 
@@ -121,8 +122,6 @@ public class TaskFormActivity extends AppCompatActivity {
         );
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnPrioridade.setAdapter(adapter1);
-
-
 
 
     }

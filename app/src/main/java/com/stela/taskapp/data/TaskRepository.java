@@ -1,61 +1,64 @@
 package com.stela.taskapp.data;
 
+import com.stela.taskapp.javadb.AppDatabase;
+import com.stela.taskapp.javadb.TaskDao;
 import com.stela.taskapp.model.Task;
 
 import java.util.ArrayList;
 
 
+import android.content.Context;
+
+import java.util.List;
+
 public class TaskRepository {
 
-    private int actualId = 0;
     private static TaskRepository instance;
-    private final ArrayList<Task> tasks;
+    private final TaskDao taskDao;
     private String text;
 
-    private TaskRepository() {
-        tasks = new ArrayList<>();
+    private TaskRepository(Context context) {
+        AppDatabase db = AppDatabase.getInstance(context);
+        taskDao = db.taskDao();
     }
 
-    public static synchronized TaskRepository getInstance() {
+    public static synchronized TaskRepository getInstance(Context context) {
         if (instance == null) {
-            instance = new TaskRepository();
+            instance = new TaskRepository(context);
         }
         return instance;
     }
 
-    // Retorna a lista
-    public ArrayList<Task> getTasks() {
-        return tasks;
+    // LISTAR
+    public List<Task> getTasks() {
+        return taskDao.getAll();
     }
 
-    // Adiciona uma task
+    // INSERIR
     public void addTask(Task task) {
-        tasks.add(task);
+        taskDao.insert(task);
     }
 
-    // Remove uma task
+    // ATUALIZAR
+    public void updateTask(Task task) {
+        taskDao.update(task);
+    }
+
+    // REMOVER
     public void removeTask(Task task) {
-        tasks.remove(task);
+        taskDao.delete(task);
     }
 
-    // Limpa tudo (opcional)
+    // LIMPAR TUDO
     public void clear() {
-        tasks.clear();
+        taskDao.deleteAll();
     }
 
     public String getText() {
-
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
     }
-
-    public int createId() {
-        actualId += 1;
-        return actualId;
-    }
-
 }
-

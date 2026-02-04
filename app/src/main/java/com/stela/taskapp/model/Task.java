@@ -1,25 +1,24 @@
 package com.stela.taskapp.model;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+@Entity(tableName = "tasks")
 public class Task implements Serializable {
 
-
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String name;
     private String description;
     private Priority priority;
-
     private State state;
-
-
     private String date;
 
-    public Task(int id, String name, String description, Priority priority, State state, String date) {
-        this.id = id;
+    public Task(String name, String description, Priority priority, State state, String date) {
         this.name = name;
         this.description = description;
         this.priority = priority;
@@ -27,15 +26,14 @@ public class Task implements Serializable {
         this.date = date;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return "Task{" +
-                "name='" + this.name + '\'' +
-                ", description='" + this.description + '\'' +
-                ", priority=" + this.priority +
-                ", state=" + this.state +
-                '}';
+    // Getters e Setters
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -46,7 +44,6 @@ public class Task implements Serializable {
         return description;
     }
 
-
     public Priority getPriority() {
         return priority;
     }
@@ -55,18 +52,8 @@ public class Task implements Serializable {
         return state;
     }
 
-
     public String getDate() {
         return date;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setName(String name) {
@@ -89,4 +76,14 @@ public class Task implements Serializable {
         this.date = date;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return "Task{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", priority=" + priority +
+                ", state=" + state +
+                '}';
+    }
 }

@@ -49,7 +49,7 @@ public class TaskFormActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        repo = TaskRepository.getInstance();
+        repo = TaskRepository.getInstance(TaskFormActivity.this);
     }
 
 
@@ -133,7 +133,6 @@ public class TaskFormActivity extends AppCompatActivity {
                         .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
                 Task newTask = new Task(
-                        repo.createId(),
                         name,
                         description,
                         prioritySelected,

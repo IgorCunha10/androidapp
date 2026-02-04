@@ -21,10 +21,8 @@ import com.stela.taskapp.model.Task;
 public class TasksActivity extends AppCompatActivity {
 
     private String TAG = "TasksActivity";
-
     private FloatingActionButton fabNewTask;
     private TaskRepository repo;
-
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
 
@@ -43,20 +41,21 @@ public class TasksActivity extends AppCompatActivity {
         initView();
         initListeners();
         initData();
+        initTaskList();
 
 
+    }
 
-
+    private void initTaskList() {
         recyclerView = findViewById(R.id.recycler_view);
 
         adapter = new TaskAdapter(repo.getTasks(), (position, task) -> {
             repo.removeTask(task);
         });
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         recyclerView.setAdapter(adapter);
-
-
     }
 
     private void initView() {
@@ -75,7 +74,7 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        repo = TaskRepository.getInstance();
+        repo = TaskRepository.getInstance(TasksActivity.this);
     }
 
     @Override

@@ -13,20 +13,21 @@ import com.stela.taskapp.R;
 import com.stela.taskapp.model.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
 
 
     private OnTaskDeleteListener listener;
-    private static ArrayList<Task> taskList;
+    private static List<Task> taskList;
 
-    public TaskAdapter(ArrayList<Task> taskList, OnTaskDeleteListener listener) {
+    public TaskAdapter(List<Task> taskList, OnTaskDeleteListener listener) {
         this.taskList = taskList;
         this.listener = listener;
     }
 
-    public void setTaskList(ArrayList<Task> taskList) {
+    public void setTaskList(List<Task> taskList) {
         this.taskList = taskList;
     }
 

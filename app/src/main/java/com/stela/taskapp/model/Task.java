@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Entity(tableName = "tasks")
 public class Task implements Serializable {
 
+    
     @PrimaryKey(autoGenerate = true)
     private int id;
 

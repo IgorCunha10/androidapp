@@ -4,6 +4,7 @@ import static com.stela.taskapp.model.Priority.SELECT;
 import static com.stela.taskapp.model.State.SELECIONE;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,12 +29,17 @@ import java.util.Locale;
 
 public class TaskFormActivity extends AppCompatActivity {
 
+    private Task actualTask;
     private Button btnSave;
     private Spinner spnEstado, spnPrioridade;
     private EditText edtData, edtName, edtDescription;
+    private TextView tvMainScText;
     private State stateSelected;
     private Priority prioritySelected;
     private TaskRepository repo;
+    private Boolean isEdit;
+
+    private int position;
 
 
 
@@ -45,8 +52,38 @@ public class TaskFormActivity extends AppCompatActivity {
         initListeners();
         initData();
 
+        Intent intent = getIntent();
+        actualTask = (Task) intent.getSerializableExtra("task");
+
+
+        if (intent.hasExtra("task")){
+
+            isEdit = true;
+            actualTask = (Task) intent.getSerializableExtra("task");
+            position = intent.getIntExtra("position", -1);
+
+            carregarDados();
+            configurarTelaEdicao();
+        }
+
+
 
     }
+
+    private void carregarDados() {
+        edtName.setText(actualTask.getName());
+        edtDescription.setText(actualTask.getDescription());
+        edtData.setText(actualTask.getDate());
+        spnPrioridade.setSelection(actualTask.getPriority().ordinal());
+        spnEstado.setSelection(actualTask.getState().ordinal());
+
+    }
+
+    private void configurarTelaEdicao() {
+        tvMainScText.setText("Editar Tarefa");
+        btnSave.setText("Salvar Alterações");
+    }
+
 
     private void initData() {
         repo = TaskRepository.getInstance(TaskFormActivity.this);
@@ -60,6 +97,7 @@ public class TaskFormActivity extends AppCompatActivity {
         edtData = (EditText) findViewById(R.id.edtData);
         edtName = findViewById(R.id.edtName);
         edtDescription = findViewById(R.id.edtDescription);
+        tvMainScText = findViewById(R.id.tvMainScText);
 
         configSpinnerAdapters();
     }
@@ -141,9 +179,12 @@ public class TaskFormActivity extends AppCompatActivity {
                 );
                 repo.addTask(newTask);
 
+
                 finish();
             }
         });
+
+
     }
 
     private void abrirDatePicker() {
@@ -189,4 +230,7 @@ public class TaskFormActivity extends AppCompatActivity {
         // TODO colocar opção selecionar nos spinner
     }
 
-}
+
+
+    }
+

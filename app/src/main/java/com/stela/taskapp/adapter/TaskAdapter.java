@@ -1,5 +1,7 @@
 package com.stela.taskapp.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,24 +13,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.stela.taskapp.R;
 import com.stela.taskapp.model.Task;
+import com.stela.taskapp.view.TaskFormActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
+    private final OnTaskDeleteListener listener;
+    private List<Task> taskList;
+    private final Context context;
 
-
-    private OnTaskDeleteListener listener;
-    private static List<Task> taskList;
-
-    public TaskAdapter(List<Task> taskList, OnTaskDeleteListener listener) {
+    public TaskAdapter(Context context, List<Task> taskList, OnTaskDeleteListener listener) {
         this.taskList = taskList;
         this.listener = listener;
+        this.context = context;
     }
 
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
+    public void setTaskList(List<Task> tasks) {
+        taskList = tasks;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -59,6 +63,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         });
 
 
+        holder.editButton.setOnClickListener(v -> {
+            Intent intent = new Intent(context, TaskFormActivity.class);
+            intent.putExtra("task", task);
+            intent.putExtra("position", position);
+            context.startActivity(intent);
+        });
+
     }
 
 
@@ -70,7 +81,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     class TaskViewHolder extends RecyclerView.ViewHolder {
 
         TextView taskName, taskDescription, taskDate, taskPriority, taskState;
-        ImageButton deleteButton;
+        ImageButton deleteButton, editButton;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +91,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             taskPriority = itemView.findViewById(R.id.taskPriority);
             taskState = itemView.findViewById(R.id.taskState);
             deleteButton = itemView.findViewById(R.id.deleteButton);
+            editButton = itemView.findViewById(R.id.editButton);
 
         }
 
@@ -90,7 +102,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public interface OnTaskDeleteListener {
         void onDeleteClick(int position, Task task);
 
-
     }
 
 
@@ -99,4 +110,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         notifyItemRemoved(position);
     }
 
+
+    public interface OnTaskEditListener {
+        void onEditClick(int position, Task task);
+
+    }
+
+    public void editItem(int position) {
+
+    }
+
+
+
 }
+
+

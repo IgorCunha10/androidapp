@@ -36,6 +36,8 @@ public class TasksActivity extends AppCompatActivity {
             int bottomInset = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
             v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), bottomInset + 24);
             return insets;
+
+
         });
 
         initView();
@@ -43,19 +45,19 @@ public class TasksActivity extends AppCompatActivity {
         initData();
         initTaskList();
 
-
     }
 
     private void initTaskList() {
+
         recyclerView = findViewById(R.id.recycler_view);
 
-        adapter = new TaskAdapter(repo.getTasks(), (position, task) -> {
+        adapter = new TaskAdapter(TasksActivity.this, repo.getTasks(), (position, task) -> {
             repo.removeTask(task);
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         recyclerView.setAdapter(adapter);
+
     }
 
     private void initView() {
@@ -81,8 +83,10 @@ public class TasksActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (repo != null) {
-           adapter.setTaskList(repo.getTasks());
-           adapter.notifyDataSetChanged();
+
+            adapter.setTaskList(repo.getTasks());
+            adapter.notifyDataSetChanged();
+
         }
 
     }

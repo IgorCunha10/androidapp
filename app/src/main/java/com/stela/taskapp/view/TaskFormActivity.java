@@ -158,29 +158,45 @@ public class TaskFormActivity extends AppCompatActivity {
 
 
         btnSave.setOnClickListener(v -> {
+
             String name = edtName.getText().toString();
             String description = edtDescription.getText().toString();
 
-            if (name.isBlank() || description.isBlank() || stateSelected == SELECIONE || prioritySelected == SELECT) {
+            if (name.isBlank() || description.isBlank()
+                    || stateSelected == SELECIONE
+                    || prioritySelected == SELECT) {
+
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String date = LocalDate.now()
+                    .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+            if (isEdit) {
+                // ATUALIZA a task existente
+                actualTask.setName(name);
+                actualTask.setDescription(description);
+                actualTask.setPriority(prioritySelected);
+                actualTask.setState(stateSelected);
+                actualTask.setDate(date);
+
+                repo.updateTask(actualTask);
+
             } else {
-                clearForm();
-
-                String edtData = LocalDate.now()
-                        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
+                //  CRIA uma nova task
                 Task newTask = new Task(
                         name,
                         description,
                         prioritySelected,
                         stateSelected,
-                        edtData
+                        date
                 );
                 repo.addTask(newTask);
-
-
-                finish();
             }
+
+            clearForm();
+            finish();
         });
 
 

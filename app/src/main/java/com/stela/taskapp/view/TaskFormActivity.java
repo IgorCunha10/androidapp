@@ -1,5 +1,6 @@
 package com.stela.taskapp.view;
 
+import static com.stela.taskapp.model.Category.CHOOSE;
 import static com.stela.taskapp.model.Priority.SELECT;
 import static com.stela.taskapp.model.State.SELECIONE;
 
@@ -101,7 +102,7 @@ public class TaskFormActivity extends AppCompatActivity {
         edtName = findViewById(R.id.edtName);
         edtDescription = findViewById(R.id.edtDescription);
         tvMainScText = findViewById(R.id.tvMainScText);
-        spnCategory = findViewById(R.id.spnCategory);
+        spnCategory = (Spinner) findViewById(R.id.spnCategory);
 
         configSpinnerAdapters();
     }
@@ -132,7 +133,7 @@ public class TaskFormActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item,
                 Category.values()
         );
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCategory.setAdapter(adapter2);
 
     }
@@ -192,7 +193,7 @@ public class TaskFormActivity extends AppCompatActivity {
             if (name.isBlank() || description.isBlank()
                     || stateSelected == SELECIONE
                     || prioritySelected == SELECT
-                    || categorySelected == Category.CHOOSE) {
+                    || categorySelected == CHOOSE) {
 
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 return;

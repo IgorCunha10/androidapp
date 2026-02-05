@@ -6,47 +6,73 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
     tools:context=".view.TasksActivity">
 
-
-    <Spinner
-        android:id="@+id/spnFilterCategory"
+    <!-- CONTEÚDO PRINCIPAL -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10sp"
-        android:paddingBottom="10sp"
-        android:padding="10sp"
-        android:layout_marginTop="35dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingHorizontal="12dp">
 
-        />
+        <!-- TÍTULO DO APP -->
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TaskApp"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp"
+            android:padding="20dp"
+            />
+
+        <!-- FILTRO -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+
+            <Spinner
+                android:id="@+id/spnFilterCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:spinnerMode="dropdown" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- LISTA DE TAREFAS -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="80dp"
+            tools:listitem="@layout/item_view" />
+
+        <!-- TEXTO VAZIO -->
+        <TextView
+            android:id="@+id/txtTasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Nenhuma tarefa cadastrada"
+            android:textSize="16sp"
+            android:textColor="@android:color/darker_gray"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </LinearLayout>
 
 
-
-    <!-- Lista de tarefas -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="759dp"
-        android:padding="15dp"
-        android:layout_marginTop="60dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_view" />
-
-    <!-- Texto para quando não houver tarefas -->
-
-
-    <TextView
-        android:id="@+id/txtTasks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nenhuma tarefa cadastrada"
-        android:textSize="16sp"
-        android:textColor="@android:color/darker_gray"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
-    <!-- Botão flutuante -->
+    <!-- FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_new_task"
         android:layout_width="wrap_content"
@@ -55,6 +81,7 @@
         android:layout_margin="24dp"
         android:contentDescription="Nova tarefa"
         app:srcCompat="@drawable/ic_add"
-        app:backgroundTint="@color/purple_500" />
+        app:backgroundTint="@color/teal_700"
+        app:tint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

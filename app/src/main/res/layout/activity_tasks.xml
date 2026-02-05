@@ -8,16 +8,33 @@
     android:layout_height="match_parent"
     tools:context=".view.TasksActivity">
 
+
+    <Spinner
+        android:id="@+id/spnFilterCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:paddingBottom="10sp"
+        android:padding="10sp"
+        android:layout_marginTop="35dp"
+
+        />
+
+
+
     <!-- Lista de tarefas -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="759dp"
-        android:padding="16dp"
+        android:padding="15dp"
+        android:layout_marginTop="60dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_view" />
 
     <!-- Texto para quando não houver tarefas -->
+
+
     <TextView
         android:id="@+id/txtTasks"
         android:layout_width="wrap_content"

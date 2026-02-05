@@ -2,10 +2,13 @@ package com.stela.taskapp.data;
 
 import com.stela.taskapp.data.javadb.AppDatabase;
 import com.stela.taskapp.data.javadb.TaskDao;
+import com.stela.taskapp.model.Category;
 import com.stela.taskapp.model.Task;
 
 
 import android.content.Context;
+
+import androidx.room.Dao;
 
 import java.util.List;
 
@@ -15,10 +18,6 @@ public class TaskRepository {
     private final TaskDao taskDao;
     private String text;
 
-    private TaskRepository(Context context) {
-        AppDatabase db = AppDatabase.getInstance(context);
-        taskDao = db.taskDao();
-    }
 
     public static synchronized TaskRepository getInstance(Context context) {
         if (instance == null) {
@@ -31,6 +30,21 @@ public class TaskRepository {
     public List<Task> getTasks() {
         return taskDao.getAll();
     }
+
+
+
+    public TaskRepository(Context context) {
+        taskDao = AppDatabase.getInstance(context).taskDao();
+    }
+
+    public List<Task> getAll() {
+        return taskDao.getAll();
+    }
+
+    public List<Task> getByCategory(Category category) {
+        return taskDao.getByCategory(category);
+    }
+
 
     // INSERIR
     public void addTask(Task task) {
@@ -59,4 +73,7 @@ public class TaskRepository {
     public void setText(String text) {
         this.text = text;
     }
-}
+
+
+    }
+

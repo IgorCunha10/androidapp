@@ -120,7 +120,7 @@ public class TaskFormActivity extends AppCompatActivity {
         // Priority
         ArrayAdapter<Priority> adapter1 = new ArrayAdapter<>(
                 this,
-                  android.R.layout.simple_spinner_item,
+                android.R.layout.simple_spinner_item,
                 Priority.values()
         );
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

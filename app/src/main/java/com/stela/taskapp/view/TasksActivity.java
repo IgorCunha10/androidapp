@@ -2,6 +2,10 @@ package com.stela.taskapp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -12,8 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.taskapp.R;
+import com.stela.taskapp.model.Category;
+import com.stela.taskapp.model.Task;
 import com.stela.taskapp.view.adapter.TaskAdapter;
 import com.stela.taskapp.data.TaskRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TasksActivity extends AppCompatActivity {
 
@@ -22,6 +31,7 @@ public class TasksActivity extends AppCompatActivity {
     private TaskRepository repo;
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
+    private Spinner spnFilterCategory;
 
 
     @Override
@@ -48,18 +58,27 @@ public class TasksActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
 
-        adapter = new TaskAdapter(TasksActivity.this, repo.getTasks(), (position, task) -> {
-            repo.removeTask(task);
-        });
+        adapter = new TaskAdapter(
+                TasksActivity.this,
+                new ArrayList<>(),
+                (position, task) -> {
+                    repo.removeTask(task);
+                }
+        );
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+
+
     }
+
+
 
     private void initView() {
 
         fabNewTask = findViewById(R.id.fab_new_task);
+        spnFilterCategory = findViewById(R.id.spnFilterCategory);
 
     }
 
@@ -74,17 +93,68 @@ public class TasksActivity extends AppCompatActivity {
 
     private void initData() {
         repo = TaskRepository.getInstance(TasksActivity.this);
+
+        ArrayAdapter<Category> spinnerAdapter =
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_item,
+                        Category.values()
+                );
+
+        spinnerAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item
+        );
+
+        spnFilterCategory.setAdapter(spinnerAdapter);
+
+        spnFilterCategory.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(
+                            AdapterView<?> parent,
+                            View view,
+                            int position,
+                            long id) {
+
+                        Category selected =
+                                (Category) parent.getItemAtPosition(position);
+
+                        List<Task> tasks;
+
+                        if (selected == Category.CHOOSE) {
+                            tasks = repo.getAll();
+                        } else {
+                            tasks = repo.getByCategory(selected);
+                        }
+
+                        adapter.setTaskList(tasks);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {}
+                }
+        );
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (repo != null) {
 
-            adapter.setTaskList(repo.getTasks());
-            adapter.notifyDataSetChanged();
+        Category selected =
+                (Category) spnFilterCategory.getSelectedItem();
 
+        List<Task> tasks;
+
+        if (selected == Category.CHOOSE) {
+            tasks = repo.getAll();
+        } else {
+            tasks = repo.getByCategory(selected);
         }
 
+        adapter.setTaskList(tasks);
+        adapter.notifyDataSetChanged();
     }
 }

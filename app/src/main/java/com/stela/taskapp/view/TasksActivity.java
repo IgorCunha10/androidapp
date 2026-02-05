@@ -2,21 +2,18 @@ package com.stela.taskapp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.taskapp.R;
-import com.stela.taskapp.adapter.TaskAdapter;
+import com.stela.taskapp.view.adapter.TaskAdapter;
 import com.stela.taskapp.data.TaskRepository;
-import com.stela.taskapp.model.Task;
 
 public class TasksActivity extends AppCompatActivity {
 

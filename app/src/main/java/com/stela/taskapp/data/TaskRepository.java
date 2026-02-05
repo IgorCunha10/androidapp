@@ -1,10 +1,8 @@
 package com.stela.taskapp.data;
 
-import com.stela.taskapp.javadb.AppDatabase;
-import com.stela.taskapp.javadb.TaskDao;
+import com.stela.taskapp.data.javadb.AppDatabase;
+import com.stela.taskapp.data.javadb.TaskDao;
 import com.stela.taskapp.model.Task;
-
-import java.util.ArrayList;
 
 
 import android.content.Context;

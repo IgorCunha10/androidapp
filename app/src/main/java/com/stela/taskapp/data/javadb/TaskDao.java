@@ -1,4 +1,4 @@
-package com.stela.taskapp.javadb;
+package com.stela.taskapp.data.javadb;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

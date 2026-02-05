@@ -18,12 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.stela.taskapp.R;
 import com.stela.taskapp.data.TaskRepository;
+import com.stela.taskapp.model.Category;
 import com.stela.taskapp.model.Priority;
 import com.stela.taskapp.model.State;
 import com.stela.taskapp.model.Task;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -31,13 +30,15 @@ public class TaskFormActivity extends AppCompatActivity {
 
     private Task actualTask;
     private Button btnSave;
-    private Spinner spnEstado, spnPrioridade;
+    private Spinner spnEstado, spnPrioridade, spnCategory;
     private EditText edtData, edtName, edtDescription;
     private TextView tvMainScText;
     private State stateSelected;
     private Priority prioritySelected;
+
+    private Category categorySelected;
     private TaskRepository repo;
-    private Boolean isEdit;
+    private Boolean isEdit = false;
 
     private int position;
 
@@ -76,6 +77,7 @@ public class TaskFormActivity extends AppCompatActivity {
         edtData.setText(actualTask.getDate());
         spnPrioridade.setSelection(actualTask.getPriority().ordinal());
         spnEstado.setSelection(actualTask.getState().ordinal());
+        spnCategory.setSelection(actualTask.getCategory().ordinal());
 
     }
 
@@ -99,6 +101,7 @@ public class TaskFormActivity extends AppCompatActivity {
         edtName = findViewById(R.id.edtName);
         edtDescription = findViewById(R.id.edtDescription);
         tvMainScText = findViewById(R.id.tvMainScText);
+        spnCategory = findViewById(R.id.spnCategory);
 
         configSpinnerAdapters();
     }
@@ -117,12 +120,20 @@ public class TaskFormActivity extends AppCompatActivity {
         // Priority
         ArrayAdapter<Priority> adapter1 = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_spinner_item,
+                  android.R.layout.simple_spinner_item,
                 Priority.values()
         );
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnPrioridade.setAdapter(adapter1);
 
+        //Category
+        ArrayAdapter<Category> adapter2 = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_item,
+                Category.values()
+        );
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnCategory.setAdapter(adapter2);
 
     }
 
@@ -156,6 +167,22 @@ public class TaskFormActivity extends AppCompatActivity {
             }
         });
 
+        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                categorySelected = Category.fromString(parent.getItemAtPosition(position).toString());
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
 
         btnSave.setOnClickListener(v -> {
 
@@ -164,32 +191,36 @@ public class TaskFormActivity extends AppCompatActivity {
 
             if (name.isBlank() || description.isBlank()
                     || stateSelected == SELECIONE
-                    || prioritySelected == SELECT) {
+                    || prioritySelected == SELECT
+                    || categorySelected == Category.CHOOSE) {
 
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            String date = LocalDate.now()
-                    .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            String date = edtData.getText().toString();
 
             if (isEdit) {
-                // ATUALIZA a task existente
+
                 actualTask.setName(name);
                 actualTask.setDescription(description);
                 actualTask.setPriority(prioritySelected);
                 actualTask.setState(stateSelected);
+                actualTask.setCategory(categorySelected);
                 actualTask.setDate(date);
 
                 repo.updateTask(actualTask);
+                Toast.makeText(this, "Tarefa Atualizada com sucesso!", Toast.LENGTH_SHORT).show();
+
 
             } else {
-                //  CRIA uma nova task
+
                 Task newTask = new Task(
                         name,
                         description,
                         prioritySelected,
                         stateSelected,
+                        categorySelected,
                         date
                 );
                 repo.addTask(newTask);
@@ -242,7 +273,7 @@ public class TaskFormActivity extends AppCompatActivity {
         edtData.setText("");
         edtDescription.setText("");
         edtName.setText("");
-        // TODO colocar opção selecionar nos spinner
+
     }
 
 

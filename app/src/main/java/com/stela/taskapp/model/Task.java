@@ -18,13 +18,15 @@ public class Task implements Serializable {
     private Priority priority;
     private State state;
     private String date;
+    private Category category;
 
-    public Task(String name, String description, Priority priority, State state, String date) {
+    public Task(String name, String description, Priority priority, State state, Category category, String date) {
         this.name = name;
         this.description = description;
         this.priority = priority;
         this.state = state;
         this.date = date;
+        this.category = category;
     }
 
     // Getters e Setters
@@ -57,6 +59,10 @@ public class Task implements Serializable {
         return date;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -73,6 +79,10 @@ public class Task implements Serializable {
         this.state = state;
     }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public void setDate(String date) {
         this.date = date;
     }
@@ -85,6 +95,7 @@ public class Task implements Serializable {
                 ", description='" + description + '\'' +
                 ", priority=" + priority +
                 ", state=" + state +
+                ", category =" + category +
                 '}';
     }
 }

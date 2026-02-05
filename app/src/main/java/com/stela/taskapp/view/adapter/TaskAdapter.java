@@ -1,4 +1,4 @@
-package com.stela.taskapp.adapter;
+package com.stela.taskapp.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import com.stela.taskapp.R;
 import com.stela.taskapp.model.Task;
 import com.stela.taskapp.view.TaskFormActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
@@ -55,6 +54,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.taskDate.setText(task.getDate());
         holder.taskPriority.setText(task.getPriority().toString());
         holder.taskState.setText(task.getState().toString());
+        holder.taskCategory.setText(task.getCategory().toString());
         holder.deleteButton.setOnClickListener(v -> {
             deleteItem(holder.getBindingAdapterPosition());
             if (listener != null) {
@@ -80,7 +80,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
 
-        TextView taskName, taskDescription, taskDate, taskPriority, taskState;
+        TextView taskName, taskDescription, taskDate, taskPriority, taskState, taskCategory;
         ImageButton deleteButton, editButton;
 
         public TaskViewHolder(@NonNull View itemView) {
@@ -90,6 +90,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             taskDate = itemView.findViewById(R.id.taskData);
             taskPriority = itemView.findViewById(R.id.taskPriority);
             taskState = itemView.findViewById(R.id.taskState);
+            taskCategory = itemView.findViewById(R.id.taskCategory);
             deleteButton = itemView.findViewById(R.id.deleteButton);
             editButton = itemView.findViewById(R.id.editButton);
 

@@ -2,6 +2,7 @@ package com.stela.taskapp.util;
 
 import androidx.room.TypeConverter;
 
+import com.stela.taskapp.model.Category;
 import com.stela.taskapp.model.Priority;
 import com.stela.taskapp.model.State;
 
@@ -25,5 +26,15 @@ public class Converters {
     @TypeConverter
     public static State toState(String value) {
         return value == null ? null : State.valueOf(value);
+    }
+
+    @TypeConverter
+    public static String fromCategory(Category category) {
+        return category == null ? null: category.name();
+    }
+
+    @TypeConverter
+    public static Category toCategory(String value) {
+        return value == null ? null: Category.valueOf(value);
     }
 }

@@ -22,15 +22,10 @@ public class TaskRepository {
     public static synchronized TaskRepository getInstance(Context context) {
         if (instance == null) {
             instance = new TaskRepository(context);
+
         }
         return instance;
     }
-
-    // LISTAR
-    public List<Task> getTasks() {
-        return taskDao.getAll();
-    }
-
 
 
     public TaskRepository(Context context) {
@@ -61,18 +56,6 @@ public class TaskRepository {
         taskDao.delete(task);
     }
 
-    // LIMPAR TUDO
-    public void clear() {
-        taskDao.deleteAll();
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
 
 
     }

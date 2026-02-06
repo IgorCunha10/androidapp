@@ -56,58 +56,12 @@ public class TasksActivity extends AppCompatActivity {
 
     }
 
-    private void initTaskList() {
-
-        recyclerView = findViewById(R.id.recycler_view);
-        searchBar = findViewById(R.id.searchBar);
-
-        adapter = new TaskAdapter(
-                TasksActivity.this,
-                new ArrayList<>(),
-                (position, task) -> {
-                    repo.removeTask(task);
-
-                }
-        );
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-
-        SearchView searchView = findViewById(R.id.searchBar);
-
-        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                adapter.filter(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.filter(newText);
-                return false;
-            }
-        });
-
-
-    }
-
-
-
     private void initView() {
 
         fabNewTask = findViewById(R.id.fab_new_task);
         spnFilterCategory = findViewById(R.id.spnFilterCategory);
-
-    }
-
-    private void initListeners() {
-
-       fabNewTask.setOnClickListener(v -> {
-           Intent intent = new Intent(TasksActivity.this, TaskFormActivity.class);
-           startActivity(intent);
-       });
+        recyclerView = findViewById(R.id.recycler_view);
+        searchBar = findViewById(R.id.searchBar);
 
     }
 
@@ -120,6 +74,7 @@ public class TasksActivity extends AppCompatActivity {
                         android.R.layout.simple_spinner_item,
                         Category.values()
                 );
+
 
         spinnerAdapter.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item
@@ -158,9 +113,59 @@ public class TasksActivity extends AppCompatActivity {
         );
     }
 
+    private void initTaskList() {
+
+        adapter = new TaskAdapter(
+                TasksActivity.this,
+                new ArrayList<>(),
+                (position, task) -> {
+                    repo.removeTask(task);
+
+                }
+        );
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                adapter.filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.filter(newText);
+                return false;
+            }
+        });
+
+
+    }
+
+
+
+
+
+    private void initListeners() {
+
+       fabNewTask.setOnClickListener(v -> {
+           Intent intent = new Intent(TasksActivity.this, TaskFormActivity.class);
+           startActivity(intent);
+
+       });
+
+    }
+
+
+
 
     @Override
     protected void onResume() {
+
         super.onResume();
 
         Category selected =

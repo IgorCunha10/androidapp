@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -32,6 +33,7 @@ public class TasksActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
     private Spinner spnFilterCategory;
+    private SearchView searchBar;
 
 
     @Override
@@ -57,18 +59,36 @@ public class TasksActivity extends AppCompatActivity {
     private void initTaskList() {
 
         recyclerView = findViewById(R.id.recycler_view);
+        searchBar = findViewById(R.id.searchBar);
 
         adapter = new TaskAdapter(
                 TasksActivity.this,
                 new ArrayList<>(),
                 (position, task) -> {
                     repo.removeTask(task);
+
                 }
         );
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        SearchView searchView = findViewById(R.id.searchBar);
+
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                adapter.filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.filter(newText);
+                return false;
+            }
+        });
 
 
     }

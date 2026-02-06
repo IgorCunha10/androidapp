@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,24 +16,37 @@ import com.stela.taskapp.R;
 import com.stela.taskapp.model.Task;
 import com.stela.taskapp.view.TaskFormActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private final OnTaskDeleteListener listener;
     private List<Task> taskList;
+    private List<Task> taskListFull;
     private final Context context;
 
-    public TaskAdapter(Context context, List<Task> taskList, OnTaskDeleteListener listener) {
+    public TaskAdapter(Context context, List<Task> taskList,
+                       OnTaskDeleteListener listener)
+    {
         this.taskList = taskList;
         this.listener = listener;
         this.context = context;
+        this.taskListFull = new ArrayList<>(taskList);
+
     }
 
     public void setTaskList(List<Task> tasks) {
-        taskList = tasks;
+        taskList.clear();
+        taskList.addAll(tasks);
+
+        taskListFull.clear();
+        taskListFull.addAll(tasks);
+
         notifyDataSetChanged();
     }
+
+
 
     @NonNull
     @Override
@@ -70,6 +84,21 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             context.startActivity(intent);
         });
 
+    }
+
+    public void filter(String text) {
+        taskList.clear();
+        if (text.isEmpty()) {
+            taskList.addAll(taskListFull);
+        } else {
+            text = text.toLowerCase();
+            for (Task task : taskListFull) {
+                if (task.getName().toLowerCase().contains(text)) {
+                    taskList.add(task);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
 
@@ -110,17 +139,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         taskList.remove(position);
         notifyItemRemoved(position);
     }
-
-
-    public interface OnTaskEditListener {
-        void onEditClick(int position, Task task);
-
-    }
-
-    public void editItem(int position) {
-
-    }
-
 
 
 }
